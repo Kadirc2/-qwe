@@ -3,60 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Kitchen | Envanter Takibi</title>
+    <title>Bambu Smart Living | Mağaza Portalı</title>
     <style>
-        :root { --bamboo: #d2b48c; --leaf: #4f7942; --bg: #fdfaf5; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #333; padding: 20px; text-align: center; }
-        .container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { color: var(--leaf); font-size: 1.5rem; }
-        input, button { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; }
-        button { background: var(--leaf); color: white; border: none; font-weight: bold; cursor: pointer; }
-        .item-list { text-align: left; margin-top: 20px; }
-        .item { background: #f9f9f9; padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
-        .delete-btn { color: red; cursor: pointer; font-weight: bold; }
+        :root { 
+            --bamboo-green: #4f7942; 
+            --sand: #f4ece1; 
+            --dark: #2c3e50;
+            --white: #ffffff;
+        }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: var(--sand); 
+            margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+        .container { 
+            width: 90%; max-width: 400px; background: var(--white); padding: 30px; border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
+        }
+        .logo { font-size: 24px; font-weight: 800; color: var(--bamboo-green); margin-bottom: 5px; letter-spacing: 1px; }
+        .tagline { font-size: 14px; color: #777; margin-bottom: 30px; }
+        
+        .nav-link {
+            display: flex; align-items: center; justify-content: center;
+            background: var(--white); border: 2px solid #eee; padding: 15px; margin-bottom: 15px;
+            border-radius: 15px; text-decoration: none; color: var(--dark); font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover { border-color: var(--bamboo-green); color: var(--bamboo-green); transform: translateY(-2px); }
+        .nav-link i { margin-right: 10px; font-size: 20px; }
+
+        .footer { margin-top: 30px; font-size: 12px; color: #aaa; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎍 Akıllı Mutfak Takibi</h1>
-        <p>Ürünlerinizi ve tarihlerini kaydedin.</p>
-        <input type="text" id="product" placeholder="Ürün Adı (Örn: Mercimek)">
-        <input type="date" id="expDate">
-        <button onclick="saveItem()">LİSTEYE EKLE</button>
-        
-        <div class="item-list" id="itemList"></div>
+        <div class="logo">BAMBU SMART HOME</div>
+        <div class="tagline">Doğallık ve Teknolojinin Buluşma Noktası</div>
+
+        <a href="#bakim" class="nav-link">📖 Kullanım & Bakım Rehberi</a>
+        <a href="https://www.trendyol.com/magaza/senin-magaza-id" class="nav-link">🛍️ Tüm Ürünlerimizi İncele</a>
+        <a href="https://instagram.com/seninmarkan" class="nav-link">📸 Instagram'da Bizi Takip Et</a>
+        <a href="https://wa.me/905XXXXXXXXX" class="nav-link" style="background: #25d366; color: white; border: none;">💬 WhatsApp Canlı Destek</a>
+
+        <div class="footer">
+            &copy; 2026 Bambu Smart Home <br> Mutfağınıza Değer Katar.
+        </div>
     </div>
-
-    <script>
-        function saveItem() {
-            const product = document.getElementById('product').value;
-            const date = document.getElementById('expDate').value;
-            if(!product || !date) return alert("Lütfen boş bırakmayın!");
-            
-            const items = JSON.parse(localStorage.getItem('kitchenItems') || '[]');
-            items.push({product, date});
-            localStorage.setItem('kitchenItems', JSON.stringify(items));
-            renderItems();
-        }
-
-        function renderItems() {
-            const items = JSON.parse(localStorage.getItem('kitchenItems') || '[]');
-            const list = document.getElementById('itemList');
-            list.innerHTML = '<h3>Mutfaktakiler:</h3>';
-            items.forEach((item, index) => {
-                list.innerHTML += `<div class="item">
-                    <span><strong>${item.product}</strong> - ${item.date}</span>
-                    <span class="delete-btn" onclick="removeItem(${index})">X</span>
-                </div>`;
-            });
-        }
-        function removeItem(index) {
-            const items = JSON.parse(localStorage.getItem('kitchenItems'));
-            items.splice(index, 1);
-            localStorage.setItem('kitchenItems', JSON.stringify(items));
-            renderItems();
-        }
-        renderItems();
-    </script>
 </body>
 </html>
