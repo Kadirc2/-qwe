@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Kitchen | Envanter Takibi</title>
+    <style>
+        :root { --bamboo: #d2b48c; --leaf: #4f7942; --bg: #fdfaf5; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #333; padding: 20px; text-align: center; }
+        .container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: var(--leaf); font-size: 1.5rem; }
+        input, button { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; }
+        button { background: var(--leaf); color: white; border: none; font-weight: bold; cursor: pointer; }
+        .item-list { text-align: left; margin-top: 20px; }
+        .item { background: #f9f9f9; padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+        .delete-btn { color: red; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎍 Akıllı Mutfak Takibi</h1>
+        <p>Ürünlerinizi ve tarihlerini kaydedin.</p>
+        <input type="text" id="product" placeholder="Ürün Adı (Örn: Mercimek)">
+        <input type="date" id="expDate">
+        <button onclick="saveItem()">LİSTEYE EKLE</button>
+        
+        <div class="item-list" id="itemList"></div>
+    </div>
+
+    <script>
+        function saveItem() {
+            const product = document.getElementById('product').value;
+            const date = document.getElementById('expDate').value;
+            if(!product || !date) return alert("Lütfen boş bırakmayın!");
+            
+            const items = JSON.parse(localStorage.getItem('kitchenItems') || '[]');
+            items.push({product, date});
+            localStorage.setItem('kitchenItems', JSON.stringify(items));
+            renderItems();
+        }
+
+        function renderItems() {
+            const items = JSON.parse(localStorage.getItem('kitchenItems') || '[]');
+            const list = document.getElementById('itemList');
+            list.innerHTML = '<h3>Mutfaktakiler:</h3>';
+            items.forEach((item, index) => {
+                list.innerHTML += `<div class="item">
+                    <span><strong>${item.product}</strong> - ${item.date}</span>
+                    <span class="delete-btn" onclick="removeItem(${index})">X</span>
+                </div>`;
+            });
+        }
+        function removeItem(index) {
+            const items = JSON.parse(localStorage.getItem('kitchenItems'));
+            items.splice(index, 1);
+            localStorage.setItem('kitchenItems', JSON.stringify(items));
+            renderItems();
+        }
+        renderItems();
+    </script>
+</body>
+</html>
